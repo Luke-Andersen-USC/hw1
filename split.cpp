@@ -10,7 +10,10 @@ split.h.  **Do NOT add main() to this file**.  When you submit
 the function below should be the only one in this file.
 */
 
+
 #include "split.h"
+#include <cstddef>
+#include <cstdlib>
 
 /* Add a prototype for a helper function here if you need */
 
@@ -18,6 +21,60 @@ void split(Node*& in, Node*& odds, Node*& evens)
 {
   /* Add code here */
 // WRITE YOUR CODE HERE
+
+  Node* head = in;
+  bool even = false;
+
+  
+  if(in != NULL)
+  {
+
+    //add to even
+    if(in->value % 2 == 0)
+    {
+      even = true;
+      if(evens != NULL)
+      {
+        evens->next = in;
+      }
+      evens = in;
+      in = in->next;
+      evens->next = NULL;
+
+    }
+    //add to odd
+    else if(in->value % 2 == 1)
+    {
+      if(odds != NULL)
+      {
+        odds->next = in;
+      }
+
+      odds = in;
+      in = in->next; 
+      odds->next = NULL;
+
+      
+    }
+
+    //recrusive if not at end
+    if(in != NULL)
+    {
+      split(in, odds, evens);
+    }
+
+    //setting evens/odds pointers back to begining
+    if(even)
+    {
+      evens = head;
+    }
+    else
+    {
+      odds = head;
+    }
+
+  }
+
 }
 
 /* If you needed a helper function, write it here */
